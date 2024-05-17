@@ -1,0 +1,50 @@
+<section class="text-gray-600 body-font">
+  <div class="container px-5 py-24 mx-auto">
+    <div class="flex flex-col text-center w-full mb-20">
+      <h1 class="sm:text-4xl text-3xl font-medium title-font mb-2 text-gray-900">Gestión de Ciudades</h1>
+      <div class="flex justify-center">
+        <button
+          class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded focus:outline-none border-0"
+          [routerLink]="['/administradores', 'ciudades', 'agregar']">
+          Agregar Ciudad
+        </button>
+      </div>
+    </div>
+    @if (ciudades.length > 0) {
+      <div class="lg:w-full mx-auto overflow-auto">
+        <div class="table-responsive">
+          <table class="table-auto w-full text-center">
+            <thead>
+            <tr>
+              <th
+                class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">
+                ID
+              </th>
+              <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Nombre</th>
+              <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Acciones
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+              @for (ciudad of ciudades; track ciudad.id) {
+                <tr>
+                  <td class="px-4 py-3">{{ ciudad.id }}</td>
+                  <td class="px-4 py-3">{{ ciudad.ciudad }}</td>
+                  <td class="px-4 py-3">
+                    <button class="btn btn-primary mr-2"
+                            [routerLink]="['/administradores', 'ciudades', 'editar', ciudad.id]">
+                      Editar
+                    </button>
+                    <button class="btn btn-danger" (click)="eliminarCiudad(ciudad)">Eliminar</button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    } @else {
+      <h1>No hay hoteles creados</h1>
+    }
+  </div>
+</section>

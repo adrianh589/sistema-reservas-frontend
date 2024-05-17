@@ -1,0 +1,45 @@
+<section class="text-gray-600 body-font">
+  <div class="container px-5 py-24 mx-auto">
+    <div class="flex flex-col text-center w-full mb-20">
+      <h1 class="sm:text-4xl text-3xl font-medium title-font mb-2 text-gray-900">Listado de Reservas</h1>
+    </div>
+
+    @if (reservas.length > 0){
+      <div class="lg:w-full mx-auto overflow-auto">
+        <div class="table-responsive">
+          <table class="table-auto w-full text-center">
+            <thead>
+            <tr>
+              <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">Reservista</th>
+              <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Identificación</th>
+              <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Habitación</th>
+              <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Fecha de Inicio de la Reserva</th>
+              <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Fecha de Fin de la Reserva</th>
+              <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Cantidad de Personas</th>
+              <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+
+              @for (reserva of reservas; track reserva.id) {
+                <tr>
+                  <td class="px-4 py-3">{{ reserva.Reservistum.nombres }}</td>
+                  <td class="px-4 py-3">{{ reserva.Reservistum.numero_documento }}</td>
+                  <td class="px-4 py-3">{{ reserva.Habitacion.numero_habitacion }}</td>
+                  <td class="px-4 py-3">{{ reserva.fecha_inicio_reserva | date }}</td>
+                  <td class="px-4 py-3">{{ reserva.fecha_fin_reserva | date }}</td>
+                  <td class="px-4 py-3">{{ reserva.cantidad_personas }}</td>
+                  <td class="px-4 py-3">
+                    <button class="btn btn-primary" [routerLink]="['/administradores', 'reservas', reserva.id]">Ver Detalle</button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    } @else {
+      <h1>No hay reservas disponibles</h1>
+    }
+  </div>
+</section>

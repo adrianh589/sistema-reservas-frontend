@@ -1,0 +1,19 @@
+<div class="container mt-5">
+  <h2 class="fw-bold">{{ this.accion === 'agregar' ? 'Crear Ciudad' : 'Editar Ciudad' }}</h2>
+  <form (ngSubmit)="guardarCiudad()" [formGroup]="ciudadForm">
+    <div class="form-group">
+      <label for="nombre">Nombre:</label>
+      <input type="text" class="form-control" id="nombre" formControlName="ciudad" required minlength="2" maxlength="50">
+      @if (ciudadForm.get('ciudad')!.invalid && ciudadForm.get('ciudad')!.touched) {
+        <div class="text-danger">
+          El nombre de la ciudad es requerido
+        </div>
+      }
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">{{ this.accion === 'agregar' ? 'Crear' : 'Guardar' }}</button>
+    </div>
+  </form>
+</div>
+
+

@@ -1,0 +1,57 @@
+<section class="text-gray-600 body-font">
+  <div class="container px-5 py-24 mx-auto">
+    <div class="flex flex-col text-center w-full mb-20">
+      <h1 class="sm:text-4xl text-3xl font-medium title-font mb-2 text-gray-900">Gestión de Habitaciones</h1>
+      <div class="flex justify-center">
+        <button class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded focus:outline-none border-0" [routerLink]="['/administradores', 'habitaciones', 'agregar']">
+          Agregar Habitación
+        </button>
+      </div>
+    </div>
+    @if (habitaciones.length > 0) {
+    <div class="lg:w-full mx-auto overflow-auto">
+      <div class="table-responsive">
+        <table class="table-auto w-full text-center">
+          <thead>
+          <tr>
+            <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">ID</th>
+            <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Hotel</th>
+            <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Tipo Habitación</th>
+            <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Valor</th>
+            <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Habilitado</th>
+            <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Impuestos</th>
+            <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Número de Habitación</th>
+            <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Ciudad</th>
+            <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Acciones</th>
+          </tr>
+          </thead>
+          <tbody>
+            @for (habitacion of habitaciones; track habitacion.id) {
+              <tr>
+                <td class="px-4 py-3">{{ habitacion.id }}</td>
+                <td class="px-4 py-3">{{ habitacion.Hotel!.nombre }}</td>
+                <td class="px-4 py-3"> {{ habitacion.TipoHabitacion!.nombre }} </td>
+                <td class="px-4 py-3">{{ habitacion.valor | currency: '$': 'symbol': '1.0-0'}}</td>
+                <td class="px-4 py-3">
+                  <span class="badge" [ngClass]="{'bg-success': habitacion.habilitado, 'bg-danger': !habitacion.habilitado}">
+                    {{ habitacion.habilitado ? 'Habilitado' : 'Deshabilitado' }}
+                  </span>
+                </td>
+                <td class="px-4 py-3">{{ habitacion.impuestos | currency: '$': 'symbol': '1.0-0'}}</td>
+                <td class="px-4 py-3">{{ habitacion.numero_habitacion }}</td>
+                <td class="px-4 py-3">{{ habitacion.UbicacionHabitacion?.ciudad }}</td>
+                <td class="px-4 py-3">
+                  <button class="btn btn-primary mr-2" [routerLink]="['/administradores', 'habitaciones', 'editar', habitacion.id]">Editar</button>
+                  <button class="btn btn-danger" (click)="eliminarHabitacion(habitacion)">Eliminar</button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+    } @else {
+      <h1>No hay habitaciónes</h1>
+    }
+  </div>
+</section>

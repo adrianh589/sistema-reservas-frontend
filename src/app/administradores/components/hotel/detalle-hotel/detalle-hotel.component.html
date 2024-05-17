@@ -1,0 +1,23 @@
+<div class="container mt-5">
+  <h2 class="fw-bold">{{ this.accion === 'agregar' ? 'Crear Hotel' : 'Editar Hotel' }}</h2>
+  <form (ngSubmit)="guardarHotel()" [formGroup]="hotelForm">
+    <div class="form-group">
+      <label for="nombre">Nombre:</label>
+      <input type="text" class="form-control" id="nombre" formControlName="nombre" required minlength="2" maxlength="50">
+      @if (hotelForm.get('nombre')!.invalid && hotelForm.get('nombre')!.touched) {
+        <div class="text-danger">
+          El nombre del hotel es requerido
+        </div>
+      }
+    </div>
+    <div class="form-group">
+      <label for="habilitado">Habilitado:</label>
+      <input type="checkbox" class="form-check-input" id="habilitado" formControlName="habilitado">
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">{{ this.accion === 'agregar' ? 'Crear' : 'Guardar' }}</button>
+    </div>
+  </form>
+</div>
+
+

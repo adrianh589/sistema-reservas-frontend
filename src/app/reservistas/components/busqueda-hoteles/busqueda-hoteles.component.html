@@ -1,0 +1,120 @@
+<div class="container my-5">
+  <h2 class="sm:text-4xl text-3xl font-medium title-font mb-2 text-gray-900">Buscar Hoteles</h2>
+  <h4 class="text-lg mb-2 text-gray-600">
+    Señor usuario, tenga en cuenta que a continuación se le mostrarán habitaciónes según sus criterios búsqueda.
+    Por otro lado, también debe tener en cuenta que se mostrarán habitaciónes que no estén en reserva según su fecha de entrada y salida.
+    Si ninguna habitación está reservada para las fechas que usted indique, aparecerán aquí.
+  </h4>
+  <form [formGroup]="busquedaForm" class="mt-4">
+    <div class="row">
+      <div class="col-md-3 mb-2 form-group">
+        <label for="fechaEntrada">Fecha de Entrada:</label>
+        <input
+          type="date"
+          id="fechaEntrada"
+          formControlName="fechaEntrada"
+          class="form-control"
+          [value]="fechaHoy"
+          [min]="fechaHoy"
+        />
+        @if (busquedaForm.get( 'fechaEntrada' )?.errors?.['maxDate']) {
+          <div class="text-danger">
+            La fecha de entrada no puede ser posterior a la fecha de salida.
+          </div>
+        }
+      </div>
+      <div class="col-md-3 form-group">
+        <label for="fechaSalida">Fecha de Salida:</label>
+        <input
+          type="date"
+          id="fechaSalida"
+          formControlName="fechaSalida"
+          class="form-control"
+          [value]="fechaHoy"
+          [min]="busquedaForm.get('fechaEntrada')?.value ? busquedaForm.get('fechaEntrada')?.value : fechaHoy"
+        />
+      </div>
+      <div class="col-md-3 form-group">
+        <label for="cantidadPersonas">Cantidad de Personas:</label>
+        <input
+          type="text"
+          id="cantidadPersonas"
+          formControlName="cantidadPersonas"
+          class="form-control"
+          maxlength="2"
+        />
+
+        @if (fc['cantidadPersonas'].touched && fc['cantidadPersonas'].invalid){
+          <div class="alert alert-danger">
+               Solo se aceptan números y mínimo 1 persona
+          </div>
+        }
+
+      </div>
+      <div class="col-md-3 form-group">
+        <label for="ciudad">Ciudad de Destino:</label>
+        <select class="form-select" id="ciudad" formControlName="ciudad">
+          <option selected [value]="null">Todas las ciudades</option>
+          @for (ciudad of ciudades; track ciudad.id){
+            <option [value]="ciudad.id">{{ ciudad.ciudad }}</option>
+          }
+        </select>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="busquedaForm.invalid" (click)="getHabitacionesDisponibles()">
+      Buscar
+    </button>
+  </form>
+
+  <!-- Resultados de la búsqueda de hoteles -->
+  @if (habitacionesDisponibles.length > 0) {
+    <section class="text-gray-600 body-font">
+      <div class="container px-5 py-24 mx-auto">
+        <div class="flex flex-wrap -m-4">
+          @for (habitacion of habitacionesDisponibles; track habitacion) {
+            <div class="p-4 lg:w-1/3">
+              <div
+                class="h-full bg-gray-100 bg-opacity-75 px-8 pt-16 pb-24 rounded-lg overflow-hidden text-center relative">
+                <h2 class="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">
+                  Habitación {{ $index + 1 }}</h2>
+                <h1
+                  class="title-font sm:text-2xl text-xl font-medium text-gray-900 mb-3">{{ habitacion.Hotel?.nombre }}</h1>
+                <p class="leading-relaxed mb-3"><span
+                  class="fw-bold">Ciudad: </span> {{ habitacion.UbicacionHabitacion?.ciudad ? habitacion.UbicacionHabitacion?.ciudad : 'Sin especificar' }}
+                </p>
+                <p class="leading-relaxed mb-3"><span
+                  class="fw-bold">Valor: </span> {{ habitacion.valor | currency: '$': 'symbol': '1.0-0' }} </p>
+                <p class="leading-relaxed mb-3"><span
+                  class="fw-bold">Impuestos: </span> {{ habitacion.impuestos | currency: '$': 'symbol': '1.0-0' }} </p>
+                <p class="leading-relaxed mb-3"><span
+                  class="fw-bold">Num. habitación: </span> {{ habitacion.numero_habitacion }} </p>
+                <p class="leading-relaxed mb-3"><span
+                  class="fw-bold">Tipo habitación: </span> {{ habitacion.TipoHabitacion?.nombre }} </p>
+                <p class="leading-relaxed mb-3"><span class="fw-bold">Disponibilidad: </span>
+                  <span class="badge"
+                        [ngClass]="{'bg-success': habitacion.habilitado, 'bg-danger': !habitacion.habilitado}">
+                  {{ habitacion.habilitado ? 'Disponible para reserva' : 'Habitación reservada' }}
+                </span>
+                </p>
+
+                <!-- Redirección -->
+                <a class="text-pink-500 inline-flex items-center cursor" (click)="seleccionarHabitacion(habitacion)">
+                  Elegir
+                  <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"
+                       stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14"></path>
+                    <path d="M12 5l7 7-7 7"></path>
+                  </svg>
+                </a>
+
+                <div class="text-center mt-2 leading-none flex justify-center absolute bottom-0 left-0 w-full py-4">
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </section>
+  }
+
+</div>

@@ -1,0 +1,76 @@
+<div class="container mt-5">
+  <h2 class="fw-bold">{{ this.accion === 'agregar' ? 'Crear Habitación' : 'Editar Habitación' }}</h2>
+  <form [formGroup]="habitacionForm" (ngSubmit)="guardarHabitacion()">
+    <div class="form-group">
+      <label for="hotel">Hotel:</label>
+      <select class="form-select" aria-label="Default select example" id="hotel" formControlName="id_hotel" required>
+        <option selected disabled>Seleccione un hotel</option>
+        @for (hotel of hoteles; track hotel.id){
+          <option [value]="hotel.id">{{ hotel.nombre }}</option>
+        }
+      </select>
+      @if (habitacionForm.get('id_hotel')!.invalid && habitacionForm.get('id_hotel')!.touched) {
+        <div class="text-danger">
+          El hotel es requerido
+        </div>
+      }
+    </div>
+    <div class="form-group">
+      <label for="tipoHabitacion">Tipo Habitación:</label>
+      <select class="form-select" aria-label="Default select example" id="tipoHabitacion" formControlName="id_tipo_habitacion" required>
+        <option selected disabled>Seleccione un tipo de habitación</option>
+        @for (tipoHabitacion of tiposHabitacion; track tipoHabitacion.id){
+          <option [value]="tipoHabitacion.id">{{ tipoHabitacion.nombre }}</option>
+        }
+      </select>
+      @if (habitacionForm.get('id_tipo_habitacion')!.invalid && habitacionForm.get('id_tipo_habitacion')!.touched) {
+        <div class="text-danger">
+          El Tipo de Habitación es requerido
+        </div>
+      }
+    </div>
+    <div class="form-group">
+      <label for="ciudad">Ciudad:</label>
+      <select class="form-select" id="ciudad" formControlName="id_ubicacion_habitacion">
+        <option selected disabled>Seleccione una ciudad:</option>
+        @for (ciudad of ciudades; track ciudad.id){
+          <option [value]="ciudad.id">{{ ciudad.ciudad }}</option>
+        }
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="valor">Valor:</label>
+      <input type="number" class="form-control" id="valor" formControlName="valor" maxlength="50" required>
+    </div>
+    @if (habitacionForm.get('valor')!.invalid && habitacionForm.get('valor')!.touched) {
+      <div class="text-danger">
+        El valor es requerido
+      </div>
+    }
+    <div class="form-group">
+      <label for="habilitado">Habilitado:</label>
+      <input type="checkbox" class="form-check-input" id="habilitado" formControlName="habilitado">
+    </div>
+    <div class="form-group">
+      <label for="impuestos">Impuestos:</label>
+      <input type="number" class="form-control" id="impuestos" maxlength="50" formControlName="impuestos">
+    </div>
+    @if (habitacionForm.get('impuestos')!.invalid && habitacionForm.get('impuestos')!.touched) {
+      <div class="text-danger">
+        Los impuestos son requeridos
+      </div>
+    }
+    <div class="form-group">
+      <label for="numeroHabitacion">Número de Habitación:</label>
+      <input type="number" class="form-control" id="numeroHabitacion" maxlength="50" formControlName="numero_habitacion" required>
+    </div>
+    @if (habitacionForm.get('numero_habitacion')!.invalid && habitacionForm.get('numero_habitacion')!.touched) {
+      <div class="text-danger">
+        El numero de habitación es requerido
+      </div>
+    }
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">{{ this.accion === 'agregar' ? 'Crear' : 'Guardar' }}</button>
+    </div>
+  </form>
+</div>
