@@ -1,0 +1,8 @@
+{
+  "/api": {
+    "target": "https://reservasahbackend.azurewebsites.net",
+    "secure": true,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}
