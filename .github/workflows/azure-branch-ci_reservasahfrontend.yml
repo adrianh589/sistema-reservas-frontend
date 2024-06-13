@@ -58,5 +58,5 @@ jobs:
         with:
           app-name: 'reservasahfrontend'
           slot-name: 'Production'
-          package: ./dist/sistema_reservas_frontend/browser
+          package: ./
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_323E78154F234BBC9524CAF01531114B }}
