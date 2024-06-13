@@ -1,6 +1,3 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
 name: Build and deploy Angular app to Azure Web App - reservasahfrontend
 
 on:
@@ -28,13 +25,15 @@ jobs:
         run: npm run build -- --prod
 
       - name: Zip artifact for deployment
-        run: zip -r release.zip dist/sistema_reservas_frontend/browser
+        run: |
+          cd dist/sistema_reservas_frontend
+          zip -r release.zip .
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
           name: angular-app
-          path: release.zip
+          path: dist/sistema_reservas_frontend/release.zip
 
   deploy:
     runs-on: ubuntu-latest
@@ -50,7 +49,7 @@ jobs:
           name: angular-app
 
       - name: Unzip artifact for deployment
-        run: unzip release.zip
+        run: unzip release.zip -d dist/sistema_reservas_frontend
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
@@ -58,5 +57,5 @@ jobs:
         with:
           app-name: 'reservasahfrontend'
           slot-name: 'Production'
-          package: dist/sistema_reservas_frontend/browser
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_323E78154F234BBC9524CAF01531114B }}
+          package: dist/sistema_reservas_frontend
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
