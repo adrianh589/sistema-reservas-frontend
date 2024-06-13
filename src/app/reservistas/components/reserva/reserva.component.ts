@@ -9,6 +9,7 @@ import {TipoDocumentoService} from "../../../services/tipo-documento.service";
 import {TipoDocumentoModel} from "../../../models/TipoDocumentoModel";
 import {ReservaService} from "../../../services/reserva.service";
 import {ReservaModel} from "../../../models/reserva.model";
+import {AdultAgeValidatorDirective} from "../../../validators/adult-age-validator.directive";
 
 @Component({
   selector: 'app-reserva',
@@ -18,7 +19,8 @@ import {ReservaModel} from "../../../models/reserva.model";
     CurrencyPipe,
     NgClass,
     JsonPipe,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AdultAgeValidatorDirective
   ],
   templateUrl: './reserva.component.html',
   styleUrl: './reserva.component.scss'

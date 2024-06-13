@@ -72,16 +72,22 @@
 
         <!-- Fecha de nacimiento -->
         <div class="col-md-3 mb-2 form-group">
-          <label for="fechaEntrada">Fecha de Nacimiento:</label>
+          <label for="fecha_nacimientores">Fecha de Nacimiento:</label>
           <input
             type="date"
-            id="fechaEntrada"
+            id="fecha_nacimientores"
             formControlName="fecha_nacimiento"
             class="form-control"
+            appAdultAgeValidator
           />
-          @if (fc.reservista.controls.fecha_nacimiento!.invalid && fc.reservista.controls.fecha_nacimiento!.touched) {
+          @if (fc.reservista.controls.fecha_nacimiento!.hasError('required') && fc.reservista.controls.fecha_nacimiento!.touched) {
             <div class="text-danger">
               La fecha de nacimiento es obligatoria
+            </div>
+          }
+          @if (fc.reservista.controls.fecha_nacimiento!.hasError('underage') && fc.reservista.controls.fecha_nacimiento!.touched){
+            <div class="text-danger">
+              La edad mínima para reservar es 18
             </div>
           }
         </div>
@@ -194,7 +200,7 @@
               >
               @if (controlForm( $index, 'correo' )!.invalid && controlForm( $index, 'correo' )!.touched) {
                 <div class="text-danger">
-                 El correo es obligatorio y debe ser un email válido
+                  El correo es obligatorio y debe ser un email válido
                 </div>
               }
             </div>
