@@ -88,3 +88,17 @@ Agrega la configuración del proxy inverso para enrutar las solicitudes a tu bac
   }
 }
 ```
+
+Dentro del workflow, en este caso dist/sistemas_reservas_frontend/browser
+debemos agregar el archivo staticwebapp.config.json con el siguiente contenido, 
+esto con la finalidad de que cuando recarguemos la página no genere 404, ya que el archivo
+que sirve nuestra app angular es el index.html
+
+````
+{
+  "navigationFallback": {
+    "rewrite": "/index.html",
+    "exclude": ["/images/*.{png,jpg,gif}", "/css/*"]
+  }
+}
+````
