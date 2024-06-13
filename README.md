@@ -25,3 +25,66 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+# Pasos para subir al azure:
+
+# Angular:
+
+Crear web app static con las respectivas configuraciones.
+
+Luego compilar el dist con ng build
+
+Después en el yaml del archivo, se debe apuntar a : app_location:"/dist/sistema_reservas_frontend/browser" # App source code path
+
+Luego crear el archivo proxy.conf.json
+
+Agrega la configuración del proxy inverso para enrutar las solicitudes a tu backend en el angular.json.
+
+```
+"architect": {
+  "serve": {
+    "options": {
+      "proxyConfig": "proxy.conf.json"
+    }
+  }
+}
+```
+```
+"architect": {
+  "build": {
+    "configurations": {
+      "production": {
+        "fileReplacements": [
+          // Aquí van las reglas de reemplazo de archivos
+        ]
+      }
+    }
+  }
+}
+```
+```
+"fileReplacements": [
+  {
+    "replace": "src/environments/environment.ts",
+    "with": "src/environments/environment.prod.ts"
+  },
+  {
+    "replace": "proxy.conf.json",
+    "with": "proxy.conf.json"
+  }
+]
+```
+```
+"architect": {
+  "build": {
+    "configurations": {
+      "production": {
+        "fileReplacements": [
+          // ...
+        ],
+        "allowedHosts": ["reservasahbackend.azurewebsites.net"] // Aqui va la ruta del backend
+      }
+    }
+  }
+}
+```
