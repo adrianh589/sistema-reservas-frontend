@@ -78,10 +78,16 @@
             id="fechaEntrada"
             formControlName="fecha_nacimiento"
             class="form-control"
+            appAdultAgeValidator
           />
           @if (fc.reservista.controls.fecha_nacimiento!.invalid && fc.reservista.controls.fecha_nacimiento!.touched) {
             <div class="text-danger">
               La fecha de nacimiento es obligatoria
+            </div>
+          }
+          @if (fc.reservista.controls.fecha_nacimiento!.hasError('underage') && fc.reservista.controls.fecha_nacimiento!.touched){
+            <div class="text-danger">
+              La edad mínima para reservar es 18
             </div>
           }
         </div>
