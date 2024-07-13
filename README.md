@@ -55,7 +55,10 @@ Agrega la configuración del proxy inverso para enrutar las solicitudes a tu bac
     "configurations": {
       "production": {
         "fileReplacements": [
-          // Aquí van las reglas de reemplazo de archivos
+          {
+            "replace": "proxy.conf.json",
+            "with": "proxy.conf.json"
+          }
         ]
       }
     }
